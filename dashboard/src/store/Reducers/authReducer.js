@@ -12,7 +12,7 @@ export const authReducer = createSlice({
     reducer : {
 
     },
-    extraReducers : {
+    extraReducers : () => {
 
     }
 })
