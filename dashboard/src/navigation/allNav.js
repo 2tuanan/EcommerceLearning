@@ -1,4 +1,6 @@
-import { AiOutlineDashboard } from "react-icons/ai";
+import { AiOutlineDashboard, AiOutlineShoppingCart } from "react-icons/ai";
+import { BiCategory } from "react-icons/bi";
+
 
 export const allNav = [
     {
@@ -10,9 +12,9 @@ export const allNav = [
     },
     {
         id : 1,
-        title : 'Dashboard',
-        icon : <AiOutlineDashboard />,
+        title : 'Orders',
+        icon : <AiOutlineShoppingCart />,
         role : 'seller',
-        path : '/admin/dashboard'
+        path : '/admin/dashboard/orders'
     }
 ]
