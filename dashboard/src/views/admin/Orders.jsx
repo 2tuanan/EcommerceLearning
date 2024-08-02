@@ -6,6 +6,7 @@ const Orders = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchValue, setSearchValue] = useState('');
     const [parPage, setParpage] = useState(5)
+    const [show, setShow]  = useState(false)
     return (
         <div className='px-2 lg:px-7 pt-5'>
             <div className='w-full p-4 bg-[#6a5fdf] rounded-md'>
@@ -35,12 +36,106 @@ const Orders = () => {
                         </div>
                         <div className='text-[#d0d2d6]'>
                             <div className='flex justify-between items-start border-b border-slate-700'>
-                                <div className='py-3 w-[25%] font-medium'>#343434</div>
+                                <div className='py-3 w-[25%] font-medium whitespace-nowrap'>#343434</div>
                                 <div className='py-3 w-[13%] font-medium'>$654</div>
                                 <div className='py-3 w-[18%] font-medium'>Pending</div>
                                 <div className='py-3 w-[18%] font-medium'>Pending</div>
                                 <div className='py-3 w-[18%] font-medium'><Link>View</Link></div>
-                                <div className='py-3 w-[8%] font-bold'><BsArrowBarDown /></div>
+                                <div onClick={(e)=> setShow(!show)} className='py-3 w-[8%] font-bold'><BsArrowBarDown /></div>
+                            </div>
+                            <div className={show 
+                            ? 'block border-b border-slate-700 bg-[#8288ed] text-[#d0d2d6]' 
+                            : 'hidden'}>
+                                <div className='flex justify-start items-start border-b border-slate-700'>
+                                    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
+                                    <div className='py-3 w-[13%] font-medium'>$54</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                </div>
+                                <div className='flex justify-start items-start border-b border-slate-700'>
+                                    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
+                                    <div className='py-3 w-[13%] font-medium'>$54</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='text-[#d0d2d6]'>
+                            <div className='flex justify-between items-start border-b border-slate-700'>
+                                <div className='py-3 w-[25%] font-medium whitespace-nowrap'>#343434</div>
+                                <div className='py-3 w-[13%] font-medium'>$654</div>
+                                <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                <div className='py-3 w-[18%] font-medium'><Link>View</Link></div>
+                                <div onClick={(e)=> setShow(!show)} className='py-3 w-[8%] font-bold'><BsArrowBarDown /></div>
+                            </div>
+                            <div className={show 
+                            ? 'block border-b border-slate-700 bg-[#8288ed] text-[#d0d2d6]' 
+                            : 'hidden'}>
+                                <div className='flex justify-start items-start border-b border-slate-700'>
+                                    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
+                                    <div className='py-3 w-[13%] font-medium'>$54</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                </div>
+                                <div className='flex justify-start items-start border-b border-slate-700'>
+                                    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
+                                    <div className='py-3 w-[13%] font-medium'>$54</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='text-[#d0d2d6]'>
+                            <div className='flex justify-between items-start border-b border-slate-700'>
+                                <div className='py-3 w-[25%] font-medium whitespace-nowrap'>#343434</div>
+                                <div className='py-3 w-[13%] font-medium'>$654</div>
+                                <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                <div className='py-3 w-[18%] font-medium'><Link>View</Link></div>
+                                <div onClick={(e)=> setShow(!show)} className='py-3 w-[8%] font-bold'><BsArrowBarDown /></div>
+                            </div>
+                            <div className={show 
+                            ? 'block border-b border-slate-700 bg-[#8288ed] text-[#d0d2d6]' 
+                            : 'hidden'}>
+                                <div className='flex justify-start items-start border-b border-slate-700'>
+                                    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
+                                    <div className='py-3 w-[13%] font-medium'>$54</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                </div>
+                                <div className='flex justify-start items-start border-b border-slate-700'>
+                                    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
+                                    <div className='py-3 w-[13%] font-medium'>$54</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className='text-[#d0d2d6]'>
+                            <div className='flex justify-between items-start border-b border-slate-700'>
+                                <div className='py-3 w-[25%] font-medium whitespace-nowrap'>#343434</div>
+                                <div className='py-3 w-[13%] font-medium'>$654</div>
+                                <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                <div className='py-3 w-[18%] font-medium'><Link>View</Link></div>
+                                <div onClick={(e)=> setShow(!show)} className='py-3 w-[8%] font-bold'><BsArrowBarDown /></div>
+                            </div>
+                            <div className={show 
+                            ? 'block border-b border-slate-700 bg-[#8288ed] text-[#d0d2d6]' 
+                            : 'hidden'}>
+                                <div className='flex justify-start items-start border-b border-slate-700'>
+                                    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
+                                    <div className='py-3 w-[13%] font-medium'>$54</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                </div>
+                                <div className='flex justify-start items-start border-b border-slate-700'>
+                                    <div className='py-3 w-[25%] font-medium whitespace-nowrap pl-3'>#3434</div>
+                                    <div className='py-3 w-[13%] font-medium'>$54</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                    <div className='py-3 w-[18%] font-medium'>Pending</div>
+                                </div>
                             </div>
                         </div>
                     </div>
