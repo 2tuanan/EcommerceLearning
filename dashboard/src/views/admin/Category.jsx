@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../Pagination";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 const Category = () => {
   const [parPage, setParpage] = useState(5);
@@ -53,33 +54,38 @@ const Category = () => {
                     <tr key={i}>
                       <td
                         scope="row"
-                        className="py-3 px-4 font-medium whitespace-nowrap"
+                        className="py-1 px-4 font-medium whitespace-nowrap"
                       >
-                        #34344
+                        {d}
                       </td>
                       <td
                         scope="row"
-                        className="py-3 px-4 font-medium whitespace-nowrap"
+                        className="py-1 px-4 font-medium whitespace-nowrap"
                       >
-                        $454
+                        <img
+                          className="w-[45px] h-[45px]"
+                          src={`http://localhost:3000/images/category/${d}.jpg`}
+                          alt=""
+                        />
                       </td>
                       <td
                         scope="row"
-                        className="py-3 px-4 font-medium whitespace-nowrap"
+                        className="py-1 px-4 font-medium whitespace-nowrap"
                       >
-                        Pending
+                        Tshirt
                       </td>
                       <td
                         scope="row"
-                        className="py-3 px-4 font-medium whitespace-nowrap"
+                        className="py-1 px-4 font-medium whitespace-nowrap"
                       >
-                        Pending
-                      </td>
-                      <td
-                        scope="row"
-                        className="py-3 px-4 font-medium whitespace-nowrap"
-                      >
-                        <Link>View</Link>
+                        <div className="flex justify-start items-center gap-4">
+                          <Link className="p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50">
+                            <FaEdit />
+                          </Link>
+                          <Link className="p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50">
+                            <FaTrash />
+                          </Link>
+                        </div>
                       </td>
                     </tr>
                   ))}
