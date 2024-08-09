@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "../Pagination";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaImage, FaTrash } from "react-icons/fa";
 
 const Category = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -121,12 +121,28 @@ const Category = () => {
                   <label htmlFor="name">Category Name</label>
                   <input
                     className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff]
-                    border border-slate-700 rounded-md text-[#d0d2d6]"
+                    border border-slate-700 rounded-md text-[#000000]"
                     type="text"
                     id="name"
                     name="category_name"
                     placeholder="Category Name"
                   />
+                </div>
+                <div>
+                  <label
+                    className="flex justify-center items-center flex-col h-[238px] cursor-pointer 
+                    border border-dashed hover:border-indigo-500 w-full border-[#d0d2d6]"
+                    htmlFor="image"
+                  >
+                    <span>
+                      <FaImage />
+                    </span>
+                    <span>Select Image</span>
+                  </label>
+                  <input className="hidden" type="file" name="image" id="image"/>
+                  <div>
+                    <button className="bg-red-500 w-full hover:shadow-red-500/40 hover:shadow-md text-white rounded-md px-7 py-2 my-2">Add Category</button>
+                  </div>
                 </div>
               </form>
             </div>
