@@ -70,7 +70,38 @@ const ChatSeller = () => {
                         </div>
                         <div className='py-4'>
                             <div className='bg-[#475569] h-[calc(100vh-290px)] rounded-md p-3 overflow-y-auto'>
-                                a
+                                <div className='w-full flex justify-start items-center'>
+                                    <div className='flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%]'>
+                                        <div>
+                                            <img className='w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[3px] rounded-full' src="http://localhost:3000/images/demo.jpg" alt="" />
+                                        </div>
+                                        <div className='flex justify-center items-start flex-col w-full bg-blue-500 shadow-lg shadow-blue-500/50 text-white py-1 px-2 rounded-sm'>
+                                            <span>How are you?</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='w-full flex justify-end items-center'>
+                                    <div className='flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%]'>
+                                        <div className='flex justify-center items-start flex-col w-full bg-red-500 shadow-lg shadow-red-500/50 text-white py-1 px-2 rounded-sm'>
+                                            <span>How are you?</span>
+                                        </div>
+                                        <div>
+                                            <img className='w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[3px] rounded-full' src="http://localhost:3000/images/admin.jpg" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='w-full flex justify-start items-center'>
+                                    <div className='flex justify-start items-start gap-2 md:px-3 py-2 max-w-full lg:max-w-[85%]'>
+                                        <div>
+                                            <img className='w-[38px] h-[38px] border-white border-2 max-w-[38px] p-[3px] rounded-full' src="http://localhost:3000/images/demo.jpg" alt="" />
+                                        </div>
+                                        <div className='flex justify-center items-start flex-col w-full bg-blue-500 shadow-lg shadow-blue-500/50 text-white py-1 px-2 rounded-sm'>
+                                            <span>I need some help</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <form className='flex gap-3'>
