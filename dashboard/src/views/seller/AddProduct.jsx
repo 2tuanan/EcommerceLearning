@@ -51,9 +51,14 @@ const AddProduct = () => {
     const [searchValue, setSearchValue] = useState('')
 
     const categorySearch = (e) => {
-        setSearchValue(e.target.value)
-        const search = categories.filter(c => c.name.toLowerCase().includes(e.target.value.toLowerCase()))
-        setAllCategory(search)
+        const value = e.target.value
+        setSearchValue(value)
+        if (value) {
+            let searchValue = allCategory.filter(c => c.name.toLowerCase().indexOf(value.toLowerCase()) !== -1)
+            setAllCategory(searchValue)
+        } else {
+            setAllCategory(categories)
+        }
     }
 
     return (
@@ -90,7 +95,7 @@ const AddProduct = () => {
                                     <div className='pt-14'></div>
                                     <div className='flex justify-start items-start flex-col h-[200px] overflow-x-scroll'>
                                         {
-                                            allCategory.map((c, i) => <span onClick={() => {
+                                            allCategory.map((c, i) => <span className={`px-4 py-2 hover:bg-indigo-500 hover:text-white hover:shadow-lg w-full cursor-pointer ${category === c.name && 'bg-indigo-500'}`} onClick={() => {
                                                 setCateShow(false)
                                                 setCategory(c.name)
                                                 setSearchValue('')
