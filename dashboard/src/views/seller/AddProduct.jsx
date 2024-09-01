@@ -3,6 +3,32 @@ import { Link } from 'react-router-dom';
 
 const AddProduct = () => {
 
+    const categories = [
+        {
+            id: 1,
+            name: 'Sports'
+        },
+        {
+            id: 2,
+            name: 'T-Shirts'
+        },
+        {
+            id: 3,
+            name: 'Mobiles'
+        },
+        {
+            id: 4,
+            name: 'Computers'
+        },
+        {
+            id: 5,
+            name: 'Watch'
+        },
+        {
+            id: 6,
+            name: 'Pants'
+        }
+    ]
     const [state, setState] = useState({
         name: '',
         description: '',
@@ -17,6 +43,17 @@ const AddProduct = () => {
             ...state,
             [e.target.name]: e.target.value
         })
+    }
+
+    const [cateShow, setCateShow] = useState(false)
+    const [category, setCategory] = useState('')
+    const [allCategory, setAllCategory] = useState([])
+    const [searchValue, setSearchValue] = useState('')
+
+    const categorySearch = (e) => {
+        setSearchValue(e.target.value)
+        const search = categories.filter(c => c.name.toLowerCase().includes(e.target.value.toLowerCase()))
+        setAllCategory(search)
     }
 
     return (
@@ -44,11 +81,11 @@ const AddProduct = () => {
                         <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
                             <div className='flex flex-col w-full gap-1 relative'>
                                 <label htmlFor="category">Category</label>
-                                <input className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf]
-                    border border-slate-700 rounded-md text-[#d0d2d6]' onChange={inputHandler} value={state.name} type="text" name='name' id='name' placeholder='Product Name' />
-                                <div className={`absolute top-[101%] bg-slate-800 w-full transition-all ${cateShow ? 'scale-100' : 'scale-0'}`}>
+                                <input readOnly onClick={()=> setCateShow(!cateShow)} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf]
+                    border border-slate-700 rounded-md text-[#d0d2d6]' onChange={inputHandler} value={category} type="text" id='category' placeholder='Category' />
+                                <div className={`absolute top-[101%] bg-[#475569] w-full transition-all ${cateShow ? 'scale-100' : 'scale-0'}`}>
                                     <div className='w-full px-4 py-2 fixed'>
-                                        <input className='px-3 py-1 focus:border-indigo-500 outline-none bg-transparent border border-slate-700 rounded-md text-[#d0d2d6] overflow-hidden' type="text" placeholder='search' />
+                                        <input onChange={categorySearch} className='px-3 py-1 w-full focus:border-indigo-500 outline-none bg-transparent border border-slate-700 rounded-md text-[#d0d2d6] overflow-hidden' type="text" placeholder='search' />
                                     </div>
                                     <div className='pt-14'></div>
                                     <div className='flex justify-start items-start flex-col h-[200px] overflow-x-scroll'>
