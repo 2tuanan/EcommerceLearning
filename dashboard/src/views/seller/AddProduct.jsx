@@ -63,15 +63,37 @@ const AddProduct = () => {
     }
 
     const [images, setImages] = useState([])
-    const [imageShow, setImageShow] = useState(false)
+    const [imageShow, setImageShow] = useState([])
     const imageHandler = (e) => {
-        const files = e.target.files
-        const length = files.length
+        const files = e.target.files;
+        const length = files.length;
         if (length > 0) {
-            setImages([...images, ...files])
+          setImages([...images, ...files]);
+          let imageUrls = [];
+          for (let i = 0; i < length; i++) {
+            let url = URL.createObjectURL(files[i]);
+            imageUrls.push(url);
+          }
+          setImageShow([...imageShow, ...imageUrls]);
         }
-        console.log(images);
+    };
+    console.log(images);
+    console.log(imageShow);
+    const changeImage = (img, index) => {
+        if (img) {
+            let tempUrl = imageShow;
+            let tempImg = images;
+            tempImg[index] = img;
+            tempUrl[index] = URL.createObjectURL(img);
+            setImageShow([...tempUrl]);
+            setImages([...tempImg]);
+        //   let url = URL.createObjectURL(img);
+        //   let newImageShow = [...imageShow];
+        //   newImageShow[index] = url;
+        //   setImageShow(newImageShow);
+        }
     }
+        
 
     return (
         <div className='px-2 lg:px-7 pt-5'>
@@ -143,6 +165,14 @@ const AddProduct = () => {
                     border border-slate-700 rounded-md text-[#d0d2d6]' onChange={inputHandler} value={state.description} name='description' id='description' placeholder='Description'  cols="10" rows="4"></textarea>
                         </div>
                         <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6]'>
+                            {
+                                imageShow.map((img,i) => <div className='h-[180px] relative'>
+                                    <label htmlFor={i}>
+                                        <img className='w-full h-full rounded-sm' src={img} alt="" />
+                                    </label>
+                                    <input onChange={(e)=>changeImage(e.target.files[0],i)} type="file" id={i} className='hidden' />
+                                </div>)
+                            }
                             <label className='flex justify-center items-center flex-col h-[180px] cursor-pointer border border-dashed hover:border-red-500 w-full' htmlFor="image">
                                 <span><FaRegImages/></span>
                                 <span>Select Image</span>
