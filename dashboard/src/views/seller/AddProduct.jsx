@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegImages } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 const AddProduct = () => {
 
@@ -93,7 +94,12 @@ const AddProduct = () => {
         //   setImageShow(newImageShow);
         }
     }
-        
+    const removeImage = (i) => {
+        const filterImage = images.filter((img, index) => index !== i);
+        const filterUrl = imageShow.filter((img, index) => index !== i);
+        setImages(filterImage);
+        setImageShow(filterUrl);
+    }   
 
     return (
         <div className='px-2 lg:px-7 pt-5'>
@@ -171,6 +177,9 @@ const AddProduct = () => {
                                         <img className='w-full h-full rounded-sm' src={img} alt="" />
                                     </label>
                                     <input onChange={(e)=>changeImage(e.target.files[0],i)} type="file" id={i} className='hidden' />
+                                    <span onClick={()=>removeImage(i)} className='p-2 z-10 cursor-pointer bg-slate-700 hover:shadow-lg 
+                                    hover:shadow-slate-400/50 text-white absolute top-1 right-1 rounded-full'
+                                    ><IoClose /></span>
                                 </div>)
                             }
                             <label className='flex justify-center items-center flex-col h-[180px] cursor-pointer border border-dashed hover:border-red-500 w-full' htmlFor="image">
@@ -178,6 +187,11 @@ const AddProduct = () => {
                                 <span>Select Image</span>
                             </label>
                             <input className='hidden' onChange={imageHandler} multiple type="file" id='image' />
+                        </div>
+                        <div className='flex'>
+                            <button className="bg-red-500 hover:shadow-red-500/40 
+                            hover:shadow-md text-white rounded-md px-7 py-2 my-2"
+                            >Add Product</button>
                         </div>
                     </form>
                 </div>
