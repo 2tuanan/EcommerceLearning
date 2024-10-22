@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaRegImages } from "react-icons/fa";
+import { FaEdit, FaRegImages } from "react-icons/fa";
 import { FadeLoader } from "react-spinners";
 
 const Profile = () => {
@@ -42,6 +42,34 @@ const Profile = () => {
                                 </label>
                             }
                             <input type="file" className='hidden' id='img' />
+                        </div>
+
+                        <div className='px-0 md:px-5 py-2'>
+                            <div className='flex justify-between text-sm flex-col gap-2 p-4 bg-slate-800
+                            rounded-md relative'>
+                                <span className='p-[6px] bg-yellow-500 rounded hover:shadow-lg 
+                                hover:shadow-yellow-500/50 absolute right-2 top-2 cursor-pointer'><FaEdit/></span>
+                                <div className='flex gap-2'>
+                                    <span>Name: </span>
+                                    <span>James MM</span>
+                                </div>
+                                <div className='flex gap-2'>
+                                    <span>Email: </span>
+                                    <span>james@gmail.com</span>
+                                </div>
+                                <div className='flex gap-2'>
+                                    <span>Role: </span>
+                                    <span>Seller</span>
+                                </div>
+                                <div className='flex gap-2'>
+                                    <span>Status: </span>
+                                    <span>Active</span>
+                                </div>
+                                <div className='flex gap-2'>
+                                    <span>Payment Account: </span>
+                                    <span>Pending</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
