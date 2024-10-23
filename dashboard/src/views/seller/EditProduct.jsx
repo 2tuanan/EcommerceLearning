@@ -68,8 +68,9 @@ const EditProduct = () => {
 
     const changeImage = (img, files) => {
         if (files.length > 0) {
-            setImages([...images, files[0]])
-            setImageShow([...imageShow, URL.createObjectURL(files[0])])
+            console.log(img);
+            console.log(files[0]);
+            
         }  
     }
 
