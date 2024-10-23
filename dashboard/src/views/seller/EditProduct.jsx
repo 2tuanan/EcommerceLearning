@@ -65,41 +65,13 @@ const EditProduct = () => {
 
     const [images, setImages] = useState([])
     const [imageShow, setImageShow] = useState([])
-    const imageHandler = (e) => {
-        const files = e.target.files;
-        const length = files.length;
-        if (length > 0) {
-          setImages([...images, ...files]);
-          let imageUrls = [];
-          for (let i = 0; i < length; i++) {
-            let url = URL.createObjectURL(files[i]);
-            imageUrls.push(url);
-          }
-          setImageShow([...imageShow, ...imageUrls]);
-        }
-    };
-    console.log(images);
-    console.log(imageShow);
-    const changeImage = (img, index) => {
-        if (img) {
-            let tempUrl = imageShow;
-            let tempImg = images;
-            tempImg[index] = img;
-            tempUrl[index] = URL.createObjectURL(img);
-            setImageShow([...tempUrl]);
-            setImages([...tempImg]);
-        //   let url = URL.createObjectURL(img);
-        //   let newImageShow = [...imageShow];
-        //   newImageShow[index] = url;
-        //   setImageShow(newImageShow);
-        }
+
+    const changeImage = (img, files) => {
+        if (files.length > 0) {
+            setImages([...images, files[0]])
+            setImageShow([...imageShow, URL.createObjectURL(files[0])])
+        }  
     }
-    const removeImage = (i) => {
-        const filterImage = images.filter((img, index) => index !== i);
-        const filterUrl = imageShow.filter((img, index) => index !== i);
-        setImages(filterImage);
-        setImageShow(filterUrl);
-    }   
 
     useEffect(() => {
         setState({
@@ -190,21 +162,13 @@ const EditProduct = () => {
                         </div>
                         <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6]'>
                             {
-                                imageShow.map((img,i) => <div className='h-[180px] relative'>
+                                imageShow.map((img, i) => <div>
                                     <label htmlFor={i}>
-                                        <img className='w-full h-full rounded-sm' src={img} alt="" />
+                                        <img src={img} alt="" />
                                     </label>
-                                    <input onChange={(e)=>changeImage(e.target.files[0],i)} type="file" id={i} className='hidden' />
-                                    <span onClick={()=>removeImage(i)} className='p-2 z-10 cursor-pointer bg-slate-700 hover:shadow-lg 
-                                    hover:shadow-slate-400/50 text-white absolute top-1 right-1 rounded-full'
-                                    ><IoClose /></span>
+                                    <input onChange={(e) => changeImage(img, e.target.files)} type="file" id={i} className='hidden' />
                                 </div>)
                             }
-                            <label className='flex justify-center items-center flex-col h-[180px] cursor-pointer border border-dashed hover:border-red-500 w-full' htmlFor="image">
-                                <span><FaRegImages/></span>
-                                <span>Select Image</span>
-                            </label>
-                            <input className='hidden' onChange={imageHandler} multiple type="file" id='image' />
                         </div>
                         <div className='flex'>
                             <button className="bg-red-500 hover:shadow-red-500/40 
