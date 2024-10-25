@@ -19,11 +19,11 @@ const sellerSchema = new Schema({
         default: 'seller'
     },
     status: {
-        type: Boolean,
+        type: String,
         default: 'pending'
     },
     payment: {
-        type: Boolean,
+        type: String,
         default: 'inactive'
     },
     method: {
@@ -32,11 +32,11 @@ const sellerSchema = new Schema({
     },
     image: {
         type: String,
-        required: ''
+        default: ''
     },
     shopInfo: {
         type: Object,
-        required: {}
+        default: {}
     }
 }, {timestamps: true})
 

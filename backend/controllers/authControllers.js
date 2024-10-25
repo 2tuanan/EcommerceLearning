@@ -1,7 +1,9 @@
 const adminModel = require('../models/adminModel')
+const sellerModel = require('../models/sellerModel')
 const { responseReturn } = require('../utiles/response')
 const bcrpty = require('bcrypt')
 const { createToken } = require('../utiles/tokenCreate')
+const { get } = require('mongoose')
 
 class authControllers{
     admin_login = async(req,res) => {
@@ -35,6 +37,23 @@ class authControllers{
 
     seller_register = async(req,res) => {
         const {name,email,password} = req.body
+        try {
+            const getUser = await sellerModel.findOne({email})
+            if (getUser) {
+                responseReturn(res,404,{error: "Email Already Exist"})
+            } else {
+                const seller = await sellerModel.create({
+                    name,
+                    email,
+                    password: await bcrpty.hash(password,10),
+                    method: 'menual',
+                    shopInfo: {}
+                })
+                console.log(seller);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
     }
 
     getUser = async (req,res) => {
