@@ -37,7 +37,7 @@ export const get_user_info = createAsyncThunk(
     'auth/get_user_info',
     async(_, {rejectWithValue, fulfillWithValue}) => {
         try {
-            const {data} = await api.get('/get-info', {withCredentials: true})
+            const {data} = await api.get('/get-user', {withCredentials: true})
             // console.log(data);
             return fulfillWithValue(data)
         } catch (error) {
@@ -79,7 +79,7 @@ const returnRole = (token) => {
 
 export const authReducer = createSlice({
     name : 'auth',
-    initialState : {
+    initialState : { 
         successMessage : '',
         errorMessage : '',
         loader : false, 
