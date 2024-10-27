@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa6";
 import { PropagateLoader } from 'react-spinners';
@@ -11,6 +11,8 @@ import { seller_login, messageClear } from '../../store/Reducers/authReducer';
 
 
 const Login = () => {
+
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
     const {loader, errorMessage, successMessage} = useSelector(state => state.auth)
@@ -35,12 +37,13 @@ const Login = () => {
         if (successMessage) {
             toast.success(successMessage)
             dispatch(messageClear())
+            navigate('/')
         }
         if (errorMessage) {
             toast.error(errorMessage)
             dispatch(messageClear())
         }   
-    })
+    }, [successMessage, errorMessage])
 
     return (
         <div className='min-w-screen min-h-screen bg-[#cdcae9] flex 
