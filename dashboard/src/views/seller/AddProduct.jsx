@@ -78,8 +78,8 @@ const AddProduct = () => {
           setImageShow([...imageShow, ...imageUrls]);
         }
     };
-    console.log(images);
-    console.log(imageShow);
+    // console.log(images);
+    // console.log(imageShow);
     const changeImage = (img, index) => {
         if (img) {
             let tempUrl = imageShow;
