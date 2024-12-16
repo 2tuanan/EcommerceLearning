@@ -43,6 +43,7 @@ class categoryControllers {
         })    
     }
     get_category = async (req, res) => {
+        const {page, searchValue, parPage} = req.query;
         
     }
 }
