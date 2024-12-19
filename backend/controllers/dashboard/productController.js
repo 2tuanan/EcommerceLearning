@@ -5,6 +5,7 @@ const productModel = require('../../models/productModel');
 
 class productController {
     add_product = async (req, res) => {
+        const {id} = req
         const form = formidable({ multiples: true });
         form.parse(req, async (err, fields, files) => {
             let {name, price, description, category, stock, discount, shopName, brand} = fields
@@ -27,10 +28,21 @@ class productController {
                 }
 
                 await productModel.create({
-                    
+                    sellerId: id,
+                    name,
+                    slug,
+                    shopName,
+                    category: category.trim(),
+                    description: description.trim(),
+                    stock: parseInt(stock),
+                    price: parseInt(price),
+                    discount: parseInt(discount),
+                    images: allImageUrl,
+                    brand: brand.trim()
                 })
+                responseReturn(res, 201, {message: 'Product Added Successfully'})
             } catch (error) {
-                
+                responseReturn(res, 500, {error: 'Internal Server Error'})
             }
         })
     }
