@@ -20,6 +20,8 @@ const Category = () => {
   const [parPage, setParpage] = useState(5);
   const [show, setShow] = useState(false);
   const [imageShow, setImageShow] = useState('')
+  const [isEdit, setIsEdit] = useState(false)
+  const [editId, setEditId] = useState(null)
 
   const [state, setstate] = useState({
     name: '',
@@ -67,6 +69,17 @@ const Category = () => {
       }
       dispatch(get_category(obj))
     },[searchValue, currentPage, parPage])
+
+  const handleEdit = (category) => {
+    setState = ({
+      name: category.name,
+      image: category.image
+    })
+    setImageShow(category.image)
+    setEditId(category._id)
+    setIsEdit(true)
+    setShow(true)
+  }
 
   return (
     <div className="px-2 lg:px-7 pt-5">
@@ -132,7 +145,7 @@ const Category = () => {
                           <Link className="p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50">
                             <FaEdit />
                           </Link>
-                          <Link className="p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50">
+                          <Link onClick={()=> handleEdit(d)} className="p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50">
                             <FaTrash />
                           </Link>
                         </div>
