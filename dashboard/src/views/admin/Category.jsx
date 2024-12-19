@@ -5,7 +5,7 @@ import { FaEdit, FaImage, FaTrash } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import { PropagateLoader } from "react-spinners";
 import { overrideStyle } from "../../utils/utils";
-import { categoryAdd, messageClear, get_category, updateCategory } from "../../store/Reducers/categoryReducer"
+import { categoryAdd, messageClear, get_category, updateCategory, deleteCategory } from "../../store/Reducers/categoryReducer"
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import Search from "../components/Search"
@@ -87,6 +87,13 @@ const Category = () => {
     setShow(true)
   }
 
+  const handleDelete = (category) => {
+    if (window.confirm('Are you sure to delete this category?')) {
+      console.log("delete category", id);
+      dispatch(deleteCategory(id))
+    }
+  }
+
   return (
     <div className="px-2 lg:px-7 pt-5">
         <div className="flex lg:hidden justify-between items-center mb-5 p-4 bg-[#5a5fdf] rounded-sm">
@@ -151,7 +158,7 @@ const Category = () => {
                           <Link onClick={()=> handleEdit(d)} className="p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50">
                             <FaEdit />
                           </Link>
-                          <Link className="p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50">
+                          <Link onClick={()=> handleDelete(d._id)} className="p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50">
                             <FaTrash />
                           </Link>
                         </div>
