@@ -23,7 +23,7 @@ const Category = () => {
   const [isEdit, setIsEdit] = useState(false)
   const [editId, setEditId] = useState(null)
 
-  const [state, setstate] = useState({
+  const [state, setState] = useState({
     name: '',
     image: ''
   })
@@ -32,7 +32,7 @@ const Category = () => {
     let files = e.target.files
     if (files.length > 0) {
       setImageShow(URL.createObjectURL(files[0]))
-      setstate({
+      setState({
         ...state,
         image: files[0]
       })
@@ -46,7 +46,6 @@ const Category = () => {
     } else {
       dispatch(categoryAdd(state))
     }
-    dispatch(categoryAdd(state))
     // console.log(state);
   }
 
@@ -54,11 +53,13 @@ const Category = () => {
     if (successMessage) {
       toast.success(successMessage)
       dispatch(messageClear())
-      setstate({
+      setState({
         name: '',
         image: ''
       })
       setImageShow('')
+      setIsEdit(false)
+      setEditId(null)
     }
     if (errorMessage) {
       toast.error(errorMessage)
@@ -76,7 +77,7 @@ const Category = () => {
     },[searchValue, currentPage, parPage])
 
   const handleEdit = (category) => {
-    setState = ({
+    setState({
       name: category.name,
       image: category.image
     })
@@ -147,10 +148,10 @@ const Category = () => {
                         className="py-1 px-4 font-medium whitespace-nowrap"
                       >
                         <div className="flex justify-start items-center gap-4">
-                          <Link className="p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50">
+                          <Link onClick={()=> handleEdit(d)} className="p-[6px] bg-yellow-500 rounded hover:shadow-lg hover:shadow-yellow-500/50">
                             <FaEdit />
                           </Link>
-                          <Link onClick={()=> handleEdit(d)} className="p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50">
+                          <Link className="p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50">
                             <FaTrash />
                           </Link>
                         </div>
@@ -191,7 +192,7 @@ const Category = () => {
                   <label htmlFor="name">Category Name</label>
                   <input
                     value={state.name}
-                    onChange={(e) => setstate({...state, name: e.target.value})}
+                    onChange={(e) => setState({...state, name: e.target.value})}
                     className="px-4 py-2 focus:border-indigo-500 outline-none bg-[#ffffff]
                     border border-slate-700 rounded-md text-[#000000]"
                     type="text"
@@ -218,7 +219,9 @@ const Category = () => {
                     <button disabled={loader ? true : false} className='bg-red-800 w-full hover:shadow-red-300/50 
                         hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>
                             {
-                                loader ? <PropagateLoader color='white' cssOverride={overrideStyle} /> : isEdit ? 'Update Category' : 'Add Category'
+                                loader 
+                                ? <PropagateLoader color='white' cssOverride={overrideStyle} /> 
+                                : isEdit ? 'Update Category' : 'Add Category'
                             }
                     </button>
                   </div>
