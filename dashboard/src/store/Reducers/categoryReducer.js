@@ -35,6 +35,23 @@ export const get_category = createAsyncThunk(
 )
 // End method
 
+export const updateCategory = createAsyncThunk(
+    'category/updateCategory',
+    async({ id, name, image},{rejectWithValue, fulfillWithValue}) => {
+        try {
+            const formData = new FormData()
+            formData.append('name', name)
+            if (image) {
+                formData.append('image', image)
+            }
+            const {data} = await api.put(`/category-update/${id}`, formData, {withCredentials: true})
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
 export const categoryReducer = createSlice({
     name : 'category',
     initialState : { 

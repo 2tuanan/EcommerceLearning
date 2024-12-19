@@ -5,7 +5,7 @@ import { FaEdit, FaImage, FaTrash } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import { PropagateLoader } from "react-spinners";
 import { overrideStyle } from "../../utils/utils";
-import { categoryAdd, messageClear, get_category } from "../../store/Reducers/categoryReducer"
+import { categoryAdd, messageClear, get_category, updateCategory } from "../../store/Reducers/categoryReducer"
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import Search from "../components/Search"
@@ -39,8 +39,13 @@ const Category = () => {
     }
   }
 
-  const add_category = (e) => {
+  const addOrUpdateCategory = (e) => {
     e.preventDefault()
+    if (isEdit) {
+      dispatch(updateCategory({id: editId, ...state}))
+    } else {
+      dispatch(categoryAdd(state))
+    }
     dispatch(categoryAdd(state))
     // console.log(state);
   }
@@ -175,13 +180,13 @@ const Category = () => {
             <div className="bg-[#6a5fdf] h-screen lg:h-auto px-3 py-2 lg:rounded-md text-[#d0d2d6]">
               <div className="flex justify-between items-center mb-4">
               <h1 className="text-[#d0d2d6] font-semibold text-xl mb-4 w-full text-center">
-                Add Category
+                {isEdit ? 'Edit Category' : 'Add Category'}
               </h1>
               <div onClick={()=>setShow(false)} className="block lg:hidden">
                 <IoMdCloseCircle />
               </div>
               </div>
-              <form onSubmit={add_category}>
+              <form onSubmit={addOrUpdateCategory}>
                 <div className="flex flex-col w-full gap-1 mb-3">
                   <label htmlFor="name">Category Name</label>
                   <input
@@ -213,7 +218,7 @@ const Category = () => {
                     <button disabled={loader ? true : false} className='bg-red-800 w-full hover:shadow-red-300/50 
                         hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>
                             {
-                                loader ? <PropagateLoader color='white' cssOverride={overrideStyle} /> : 'Add Category'
+                                loader ? <PropagateLoader color='white' cssOverride={overrideStyle} /> : isEdit ? 'Update Category' : 'Add Category'
                             }
                     </button>
                   </div>
