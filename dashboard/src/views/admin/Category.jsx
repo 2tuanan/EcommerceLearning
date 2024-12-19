@@ -87,7 +87,7 @@ const Category = () => {
     setShow(true)
   }
 
-  const handleDelete = (category) => {
+  const handleDelete = (id) => {
     if (window.confirm('Are you sure to delete this category?')) {
       console.log("delete category", id);
       dispatch(deleteCategory(id))

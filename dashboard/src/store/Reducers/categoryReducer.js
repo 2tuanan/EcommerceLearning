@@ -108,6 +108,13 @@ export const categoryReducer = createSlice({
             state.loader = false;
             state.errorMessage = payload.error
         })
+        .addCase(deleteCategory.fulfilled, (state, action) => {
+            state.categorys = state.categorys.filter(item => item._id !== action.meta.arg)
+            state.successMessage = action.payload.message
+        })
+        .addCase(deleteCategory.rejected, (state, action) => {
+            state.errorMessage = action.payload
+        })
     }
 });
 

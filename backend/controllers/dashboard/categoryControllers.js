@@ -112,6 +112,20 @@ class categoryControllers {
         })
     }
     // End method
+    delete_category = async (req, res) => {
+        try {
+            const categoryId = req.params.id;
+            const deleteCategory = await categoryModel.findByIdAndDelete(categoryId);
+            if (!deleteCategory) {
+                console.log('Category not found');
+                return res.status(404).json({ message: 'Category not found' });
+            } 
+            res.status(200).json({ message: 'Category Deleted Successfully' });
+        } catch (error) {
+            console.log(error.message);
+            res.status(500).json({ message: 'Internal Server Error' });
+        }
+    }
 }
 
 module.exports = new categoryControllers();

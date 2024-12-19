@@ -6,5 +6,6 @@ const router = require('express').Router()
 router.post('/category-add',authMiddleware, categoryControllers.add_category)
 router.get('/category-get',authMiddleware, categoryControllers.get_category)
 router.put('/category-update/:id',authMiddleware, categoryControllers.update_category)
+router.delete('/category/:id', categoryControllers.delete_category)
 
 module.exports = router
