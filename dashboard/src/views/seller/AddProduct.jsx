@@ -101,8 +101,9 @@ const AddProduct = () => {
         formData.append('category', category)
 
         for (let i = 0; i < images.length; i++) {
-            formData.append('image', images[i])
+            formData.append('images', images[i])
         }
+        console.log(state);
         dispatch(add_product(formData))
     }
 
