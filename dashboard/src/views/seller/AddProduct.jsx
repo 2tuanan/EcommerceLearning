@@ -1,36 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegImages } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { useDispatch, useSelector } from 'react-redux';
+import { use } from 'react';
+import { get_category } from '../../store/Reducers/categoryReducer';
 
 const AddProduct = () => {
+    const dispatch = useDispatch()
+    const {categorys} = useSelector(state => state.category)
 
-    const categories = [
-        {
-            id: 1,
-            name: 'Sports'
-        },
-        {
-            id: 2,
-            name: 'T-Shirts'
-        },
-        {
-            id: 3,
-            name: 'Mobiles'
-        },
-        {
-            id: 4,
-            name: 'Computers'
-        },
-        {
-            id: 5,
-            name: 'Watch'
-        },
-        {
-            id: 6,
-            name: 'Pants'
-        }
-    ]
+    useEffect(() => {
+        dispatch(get_category({
+            searchValue: "",
+            parPage: "",
+            page: ""
+        }))
+    }, [])
+
     const [state, setState] = useState({
         name: '',
         description: '',
@@ -59,7 +46,7 @@ const AddProduct = () => {
             let searchValue = allCategory.filter(c => c.name.toLowerCase().indexOf(value.toLowerCase()) !== -1)
             setAllCategory(searchValue)
         } else {
-            setAllCategory(categories)
+            setAllCategory(categorys)
         }
     }
 
@@ -100,6 +87,13 @@ const AddProduct = () => {
         setImages(filterImage);
         setImageShow(filterUrl);
     }   
+    const add = (e) => {
+        e.preventDefault()
+    }
+
+    useEffect(() => {
+        setAllCategory(categorys)
+    }, [categorys])
 
     return (
         <div className='px-2 lg:px-7 pt-5'>
@@ -112,7 +106,7 @@ const AddProduct = () => {
                     >All Product</Link>
                 </div>
                 <div>
-                    <form>
+                    <form onSubmit={add}>
                         <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
                             <div className='flex flex-col w-full gap-1'>
                                 <label htmlFor="name">Product Name</label>
@@ -142,7 +136,7 @@ const AddProduct = () => {
                                                 setCateShow(false)
                                                 setCategory(c.name)
                                                 setSearchValue('')
-                                                setAllCategory(categories)
+                                                setAllCategory(categorys)
                                             }}>{c.name}
                                             </span>)
                                         }
