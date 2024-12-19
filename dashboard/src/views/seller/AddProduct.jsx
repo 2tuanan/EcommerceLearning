@@ -5,6 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
 import { use } from 'react';
 import { get_category } from '../../store/Reducers/categoryReducer';
+import { add_product } from '../../store/Reducers/productReducer';
 
 const AddProduct = () => {
     const dispatch = useDispatch()
@@ -89,6 +90,20 @@ const AddProduct = () => {
     }   
     const add = (e) => {
         e.preventDefault()
+        const formData = new FormData()
+        formData.append('name', state.name)
+        formData.append('description', state.description)
+        formData.append('discount', state.discount)
+        formData.append('price', state.price)
+        formData.append('brand', state.brand)
+        formData.append('stock', state.stock)
+        formData.append('shopName', 'EasyShop')
+        formData.append('category', category)
+
+        for (let i = 0; i < images.length; i++) {
+            formData.append('image', images[i])
+        }
+        dispatch(add_product(formData))
     }
 
     useEffect(() => {
