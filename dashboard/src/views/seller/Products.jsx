@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Search from "../components/Search";
 import { Link } from "react-router-dom";
 import Pagination from "../Pagination";
 import { FaEdit, FaRegEye, FaTrash } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { get_products } from "../../store/Reducers/productReducer";
 
 const Products = () => {
+  const dispatch = useDispatch();
+  const { products, totalProduct } = useSelector((state) => state.product);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [searchValue, setSearchValue] = useState("");
   const [parPage, setParpage] = useState(5);
+
+  useEffect(() => {
+    const obj = {
+      parPage: parseInt(parPage),
+      page: parseInt(currentPage),
+      searchValue
+    }
+    dispatch(get_products(obj))
+  }, [searchValue, currentPage, parPage]);
 
   return (
     <div className="px-2 lg:px-7 pt-5">
