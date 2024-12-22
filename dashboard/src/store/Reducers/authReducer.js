@@ -58,6 +58,7 @@ export const profile_image_upload = createAsyncThunk(
         }
     }
 )
+// End method
 
 export const seller_register = createAsyncThunk(
     'auth/seller_register',
@@ -150,6 +151,14 @@ export const authReducer = createSlice({
         .addCase(get_user_info.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.userInfo = payload.userInfo
+        })
+        .addCase(profile_image_upload.pending, (state, { payload }) => {
+            state.loader = true;
+        })
+        .addCase(profile_image_upload.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.userInfo = payload.userInfo
+            state.successMessage = payload.message
         })
     }
 });

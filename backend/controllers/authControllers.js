@@ -123,25 +123,47 @@ class authControllers{
                 secure: true
             })
             const { image } = files
-
             try {
-                
+                const result = await cloudinary.uploader.upload(image.filepath, {folder: 'profile'})
+                if (result) {
+                    let seller = await sellerModel.findById(id)
+                    if (!seller) {
+                        return responseReturn(res, 404, {error: 'Seller Not Found'})
+                    }
+
+                    const oldImage = seller.image
+                    if (oldImage) {
+                        const oldImageId = oldImage.split('/').slice(-2).join('/').split('.')[0]
+                        await cloudinary.uploader.destroy(oldImageId)
+                    }
+                    seller.image = result.secure_url
+
+                    await seller.save()
+                    const userInfo = await sellerModel.findById(id)
+                    return responseReturn(res, 200, {message: 'Profile Image Uploaded Successfully', userInfo})
+                } else
+                    responseReturn(res, 404, {error: 'Image Upload Failed'})
             } catch (error) {
-                
+                responseReturn(res, 500, {error: error.message})
             }
+
+            // try {
+            //     const result = await cloudinary.uploader.upload(image.filepath, {folder: 'profile'})
+            //     if (result) {
+            //         await sellerModel.findByIdAndUpdate(id, {
+            //             image: result.url
+            //         })
+            //         const userInfo = await sellerModel.findById(id)
+            //         responseReturn(res, 201, {message: 'Profile Image Uploaded Successfully', userInfo})
+            //     } else {
+            //         responseReturn(res, 404, {error: 'Image Upload Failed'})
+            //     }
+            // } catch (error) {
+            //     responseReturn(res, 500, {error: error.message})
+            // }
         })
-        try {
-            if (role === 'admin') {
-                const user = await adminModel.findByIdAndUpdate(id,{image},{new: true})
-                responseReturn(res, 200, {userInfo : user})
-            } else {
-                const seller = await sellerModel.findByIdAndUpdate(id,{image},{new: true})
-                responseReturn(res, 200, {userInfo : seller})
-            }
-        } catch (error) {
-            responseReturn(res, 500, {error: 'Internal Server Error'})
-        }
     }
+    //End Method
 }
 
 module.exports = new authControllers()
