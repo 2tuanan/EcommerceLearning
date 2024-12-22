@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { FaRegImages } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from 'react-redux';
-import { use } from 'react';
 import { get_category } from '../../store/Reducers/categoryReducer';
 import { add_product, messageClear } from '../../store/Reducers/productReducer';
 import { PropagateLoader } from 'react-spinners';
