@@ -2,6 +2,7 @@ import React from 'react';
 import { FaEdit, FaRegImages } from "react-icons/fa";
 import { FadeLoader } from "react-spinners";
 import { useDispatch, useSelector } from 'react-redux';
+import { profile_image_upload }  from '../../store/Reducers/authReducer'
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -13,7 +14,9 @@ const Profile = () => {
 
     const add_image = (e) => {
         if(e.target.files.length > 0) {
-            console.log(e.target.files[0]);
+            const formData = new FormData();
+            formData.append('image', e.target.files[0]);
+            dispatch(profile_image_upload(formData))
         }
     }
 

@@ -4,6 +4,8 @@ const sellerCustomerModel = require('../models/chat/sellerCustomerModel')
 const { responseReturn } = require('../utiles/response')
 const bcrpty = require('bcrypt')
 const { createToken } = require('../utiles/tokenCreate')
+const cloudinary = require('cloudinary').v2
+const formidable = require('formidable')
 
 class authControllers{
     admin_login = async(req,res) => {
@@ -109,6 +111,37 @@ class authControllers{
         }
     }
     //End getUser Method
+
+    profile_image_upload = async(req,res) => {
+        const { id } = req
+        const form = formidable({ multiples: true })
+        form.parse(req, async (err,_,files) => {
+            cloudinary.config({
+                cloud_name: process.env.cloud_name,
+                api_key: process.env.api_key,
+                api_secret: process.env.api_secret,
+                secure: true
+            })
+            const { image } = files
+
+            try {
+                
+            } catch (error) {
+                
+            }
+        })
+        try {
+            if (role === 'admin') {
+                const user = await adminModel.findByIdAndUpdate(id,{image},{new: true})
+                responseReturn(res, 200, {userInfo : user})
+            } else {
+                const seller = await sellerModel.findByIdAndUpdate(id,{image},{new: true})
+                responseReturn(res, 200, {userInfo : seller})
+            }
+        } catch (error) {
+            responseReturn(res, 500, {error: 'Internal Server Error'})
+        }
+    }
 }
 
 module.exports = new authControllers()
