@@ -83,6 +83,23 @@ class productController {
             console.log(error.message);
         }
     }
+    // End method
+
+    product_update = async (req, res) => {
+        let {name, description, discount, price, brand, stock, productId} = req.body;
+        name = name.trim();
+        const slug = name.split(' ').join('-');
+
+        try {
+            await productModel.findByIdAndUpdate(productId, {
+                name, description, discount, price, brand, stock, slug, productId
+            })
+            const product = await productModel.findById(productId)
+            responseReturn(res, 200, {product, message: 'Product Updated Successfully'})
+        } catch (error) {
+            responseReturn(res, 500, {error: error.message})
+        }
+    }
 }
 
 module.exports = new productController();

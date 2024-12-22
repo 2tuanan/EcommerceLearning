@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_category } from '../../store/Reducers/categoryReducer';
-import { get_product, update_product } from '../../store/Reducers/productReducer';
+import { get_product, update_product, messageClear } from '../../store/Reducers/productReducer';
 import { PropagateLoader } from 'react-spinners';
 import { overrideStyle } from '../../utils/utils';
 import toast from 'react-hot-toast';
@@ -87,15 +87,6 @@ const EditProduct = () => {
         if (successMessage) {
             toast.success(successMessage)
             dispatch(messageClear())
-            setState({
-                name: '',
-                description: '',
-                discount: '',
-                price: '',
-                brand: '',
-                stock: ''
-            })
-            setCategory('')
         }
         if (errorMessage) {
             toast.error(errorMessage)
@@ -114,7 +105,7 @@ const EditProduct = () => {
             stock: state.stock,
             productId: productId
         }
-        dispatch(updateproduct(obj))
+        dispatch(update_product(obj))
     }
 
     useEffect(() => {
@@ -195,7 +186,7 @@ const EditProduct = () => {
                         </div>
                         <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6]'>
                             {
-                                imageShow.map((img, i) => <div>
+                                (imageShow && imageShow.length > 0) && imageShow.map((img, i) => <div>
                                     <label htmlFor={i}>
                                         <img src={img} alt="" />
                                     </label>
