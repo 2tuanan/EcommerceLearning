@@ -46,16 +46,12 @@ export const get_product = createAsyncThunk(
 )
 // End method
 
-export const updateproduct = createAsyncThunk(
+export const update_product = createAsyncThunk(
     'product/updateproduct',
-    async({ id, name, image},{rejectWithValue, fulfillWithValue}) => {
+    async(product,{rejectWithValue, fulfillWithValue}) => {
         try {
-            const formData = new FormData()
-            formData.append('name', name)
-            if (image) {
-                formData.append('image', image)
-            }
-            const {data} = await api.put(`/product-update/${id}`, formData, {withCredentials: true})
+            const {data} = await api.put(`/product-update/${product._id}`, product, {withCredentials: true})
+            console.log(data);
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)

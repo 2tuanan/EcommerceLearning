@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { get_category } from '../../store/Reducers/categoryReducer';
-import { get_product } from '../../store/Reducers/productReducer';
+import { get_product, update_product } from '../../store/Reducers/productReducer';
+import { PropagateLoader } from 'react-spinners';
+import { overrideStyle } from '../../utils/utils';
+import toast from 'react-hot-toast';
 
 const EditProduct = () => {
 
@@ -10,7 +13,7 @@ const EditProduct = () => {
     
     const dispatch = useDispatch()
     const { categorys } = useSelector(state => state.category)
-    const { product } = useSelector(state => state.product)
+    const { product, loader, successMessage, errorMessage } = useSelector(state => state.product)
 
     useEffect(() => {
         dispatch(get_category({
@@ -81,6 +84,40 @@ const EditProduct = () => {
     },[product])
 
     useEffect(() => {
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())
+            setState({
+                name: '',
+                description: '',
+                discount: '',
+                price: '',
+                brand: '',
+                stock: ''
+            })
+            setCategory('')
+        }
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+    }, [successMessage, errorMessage])
+    
+    const update = (e) => {
+        e.preventDefault()
+        const obj = {
+            name: state.name,
+            description: state.description,
+            discount: state.discount,
+            price: state.price,
+            brand: state.brand,
+            stock: state.stock,
+            productId: productId
+        }
+        dispatch(updateproduct(obj))
+    }
+
+    useEffect(() => {
         setAllCategory(categorys)
     }, [categorys])
 
@@ -95,7 +132,7 @@ const EditProduct = () => {
                     >All Product</Link>
                 </div>
                 <div>
-                    <form>
+                    <form onSubmit={update}>
                         <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
                             <div className='flex flex-col w-full gap-1'>
                                 <label htmlFor="name">Product Name</label>
@@ -167,9 +204,14 @@ const EditProduct = () => {
                             }
                         </div>
                         <div className='flex'>
-                            <button className="bg-red-500 hover:shadow-red-500/40 
-                            hover:shadow-md text-white rounded-md px-7 py-2 my-2"
-                            >Save Changes</button>
+                            <button disabled={loader ? true : false} className='bg-red-500 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 hover:shadow-red-300/50 
+                            hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>
+                                {
+                                    loader 
+                                    ? <PropagateLoader color='white' cssOverride={overrideStyle} /> 
+                                    : 'Save Changes'
+                                }
+                            </button>
                         </div>
                     </form>
                 </div>
