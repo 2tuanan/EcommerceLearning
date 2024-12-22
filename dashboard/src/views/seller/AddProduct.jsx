@@ -166,7 +166,7 @@ const AddProduct = () => {
                             <div className='flex flex-col w-full gap-1 relative'>
                                 <label htmlFor="category">Category</label>
                                 <input readOnly onClick={()=> setCateShow(!cateShow)} className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf]
-                    border border-slate-700 rounded-md text-[#d0d2d6]' onChange={inputHandler} value={category} type="text" id='category' placeholder='--Select Category--' />
+                                border border-slate-700 rounded-md text-[#d0d2d6]' onChange={inputHandler} value={category} type="text" id='category' placeholder='--Select Category--' />
                                 <div className={`absolute top-[101%] bg-[#475569] w-full transition-all ${cateShow ? 'scale-100' : 'scale-0'}`}>
                                     <div className='w-full px-4 py-2 fixed'>
                                         <input onChange={categorySearch} className='px-3 py-1 w-full focus:border-indigo-500 outline-none bg-transparent border border-slate-700 rounded-md text-[#d0d2d6] overflow-hidden' type="text" placeholder='search' />
@@ -188,7 +188,7 @@ const AddProduct = () => {
                             <div className='flex flex-col w-full gap-1'>
                                 <label htmlFor="stock">Product Stock</label>
                                 <input className='px-4 py-2 focus:border-indigo-500 outline-none bg-[#6a5fdf]
-                    border border-slate-700 rounded-md text-[#d0d2d6]' onChange={inputHandler} value={state.stock} type="text" name='stock' id='stock' placeholder='Stock' />
+                                border border-slate-700 rounded-md text-[#d0d2d6]' onChange={inputHandler} value={state.stock} type="text" name='stock' id='stock' placeholder='Stock' />
                             </div>
                         </div>
 

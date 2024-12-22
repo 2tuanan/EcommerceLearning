@@ -10,6 +10,7 @@ const EditProduct = () => {
     
     const dispatch = useDispatch()
     const { categorys } = useSelector(state => state.category)
+    const { product } = useSelector(state => state.product)
 
     useEffect(() => {
         dispatch(get_category({
@@ -23,34 +24,6 @@ const EditProduct = () => {
         dispatch(get_product(productId))
     }, [productId])
 
-
-
-    // const categories = [
-    //     {
-    //         id: 1,
-    //         name: 'Sports'
-    //     },
-    //     {
-    //         id: 2,
-    //         name: 'T-Shirts'
-    //     },
-    //     {
-    //         id: 3,
-    //         name: 'Mobiles'
-    //     },
-    //     {
-    //         id: 4,
-    //         name: 'Computers'
-    //     },
-    //     {
-    //         id: 5,
-    //         name: 'Watch'
-    //     },
-    //     {
-    //         id: 6,
-    //         name: 'Pants'
-    //     }
-    // ]
     const [state, setState] = useState({
         name: '',
         description: '',
@@ -79,7 +52,7 @@ const EditProduct = () => {
             let searchValue = allCategory.filter(c => c.name.toLowerCase().indexOf(value.toLowerCase()) !== -1)
             setAllCategory(searchValue)
         } else {
-            setAllCategory(categories)
+            setAllCategory(categorys)
         }
     }
 
@@ -96,18 +69,20 @@ const EditProduct = () => {
 
     useEffect(() => {
         setState({
-            name: 'Mens T-Shirt',
-            description: 'This is a mens t-shirt',
-            discount: 10,
-            price: 200,
-            brand: 'Easy',
-            stock: 10
+            name: product.name,
+            description: product.description,
+            discount: product.discount,
+            price: product.price,
+            brand: product.brand,
+            stock: product.stock
         })
-        setCategory('T-Shirts')
-        setImageShow(['http://localhost:3000/images/admin.jpg', 
-            'http://localhost:3000/images/demo.jpg', 
-            'http://localhost:3000/images/seller.png'])
-    },[])
+        setCategory(product.category)
+        setImageShow(product.images)
+    },[product])
+
+    useEffect(() => {
+        setAllCategory(categorys)
+    }, [categorys])
 
     return (
         <div className='px-2 lg:px-7 pt-5'>
@@ -150,7 +125,7 @@ const EditProduct = () => {
                                                 setCateShow(false)
                                                 setCategory(c.name)
                                                 setSearchValue('')
-                                                setAllCategory(categories)
+                                                setAllCategory(categorys)
                                             }}>{c.name}
                                             </span>)
                                         }
