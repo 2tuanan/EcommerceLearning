@@ -100,6 +100,15 @@ class productController {
             responseReturn(res, 500, {error: error.message})
         }
     }
+    // End method
+
+    product_image_update = async (req, res) => {
+        const form = formidable({ multiples: true });
+        form.parse(req, (err, field, files) => {
+            console.log(field)
+            console.log(files)
+        })
+    }
 }
 
 module.exports = new productController();
