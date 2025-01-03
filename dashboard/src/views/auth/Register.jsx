@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa6";
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,9 @@ import toast from 'react-hot-toast';
 
 
 const Register = () => {
+
+    const navigate = useNavigate()
+
     const distpatch = useDispatch()
 
     const {loader, successMessage, errorMessage} = useSelector(state => state.auth)
@@ -36,6 +39,7 @@ const Register = () => {
         if (successMessage) {
             toast.success(successMessage)
             distpatch(messageClear())
+            navigate('/')
         }
         if (errorMessage) {
             toast.error(errorMessage)
