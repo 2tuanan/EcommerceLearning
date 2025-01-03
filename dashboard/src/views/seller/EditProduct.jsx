@@ -1,36 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FaRegImages } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
+import { Link, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { get_category } from '../../store/Reducers/categoryReducer';
+import { get_product, update_product, messageClear, product_image_update } from '../../store/Reducers/productReducer';
+import { PropagateLoader } from 'react-spinners';
+import { overrideStyle } from '../../utils/utils';
+import toast from 'react-hot-toast';
 
 const EditProduct = () => {
 
-    const categories = [
-        {
-            id: 1,
-            name: 'Sports'
-        },
-        {
-            id: 2,
-            name: 'T-Shirts'
-        },
-        {
-            id: 3,
-            name: 'Mobiles'
-        },
-        {
-            id: 4,
-            name: 'Computers'
-        },
-        {
-            id: 5,
-            name: 'Watch'
-        },
-        {
-            id: 6,
-            name: 'Pants'
-        }
-    ]
+    const { productId } = useParams()
+    
+    const dispatch = useDispatch()
+    const { categorys } = useSelector(state => state.category)
+    const { product, loader, successMessage, errorMessage } = useSelector(state => state.product)
+
+    useEffect(() => {
+        dispatch(get_category({
+            searchValue: '',
+            parPage: '',
+            page: ''
+        }))
+    }, [])
+
+    useEffect(() => {
+        dispatch(get_product(productId))
+    }, [productId])
+
     const [state, setState] = useState({
         name: '',
         description: '',
@@ -59,35 +55,63 @@ const EditProduct = () => {
             let searchValue = allCategory.filter(c => c.name.toLowerCase().indexOf(value.toLowerCase()) !== -1)
             setAllCategory(searchValue)
         } else {
-            setAllCategory(categories)
+            setAllCategory(categorys)
         }
     }
 
-    const [images, setImages] = useState([])
     const [imageShow, setImageShow] = useState([])
 
     const changeImage = (img, files) => {
         if (files.length > 0) {
-            console.log(img);
-            console.log(files[0]);
-            
+            dispatch(product_image_update({
+                oldImage: img,
+                newImage: files[0],
+                productId
+            }))
         }  
     }
 
     useEffect(() => {
         setState({
-            name: 'Mens T-Shirt',
-            description: 'This is a mens t-shirt',
-            discount: 10,
-            price: 200,
-            brand: 'Easy',
-            stock: 10
+            name: product.name,
+            description: product.description,
+            discount: product.discount,
+            price: product.price,
+            brand: product.brand,
+            stock: product.stock
         })
-        setCategory('T-Shirts')
-        setImageShow(['http://localhost:3000/images/admin.jpg', 
-            'http://localhost:3000/images/demo.jpg', 
-            'http://localhost:3000/images/seller.png'])
-    },[])
+        setCategory(product.category)
+        setImageShow(product.images)
+    },[product])
+
+    useEffect(() => {
+        if (successMessage) {
+            toast.success(successMessage)
+            dispatch(messageClear())
+        }
+        if (errorMessage) {
+            toast.error(errorMessage)
+            dispatch(messageClear())
+        }
+    }, [successMessage, errorMessage])
+    
+    const update = (e) => {
+        e.preventDefault()
+        const obj = {
+            name: state.name,
+            description: state.description,
+            discount: state.discount,
+            price: state.price,
+            brand: state.brand,
+            stock: state.stock,
+            productId: productId
+        }
+        dispatch(update_product(obj))
+    }
+
+    useEffect(() => {
+        setAllCategory(categorys)
+    }, [categorys])
 
     return (
         <div className='px-2 lg:px-7 pt-5'>
@@ -100,7 +124,7 @@ const EditProduct = () => {
                     >All Product</Link>
                 </div>
                 <div>
-                    <form>
+                    <form onSubmit={update}>
                         <div className='flex flex-col mb-3 md:flex-row gap-4 w-full text-[#d0d2d6]'>
                             <div className='flex flex-col w-full gap-1'>
                                 <label htmlFor="name">Product Name</label>
@@ -130,7 +154,7 @@ const EditProduct = () => {
                                                 setCateShow(false)
                                                 setCategory(c.name)
                                                 setSearchValue('')
-                                                setAllCategory(categories)
+                                                setAllCategory(categorys)
                                             }}>{c.name}
                                             </span>)
                                         }
@@ -163,7 +187,7 @@ const EditProduct = () => {
                         </div>
                         <div className='grid lg:grid-cols-4 grid-cols-1 md:grid-cols-3 sm:grid-cols-2 sm:gap-4 md:gap-4 gap-3 w-full text-[#d0d2d6]'>
                             {
-                                imageShow.map((img, i) => <div>
+                                (imageShow && imageShow.length > 0) && imageShow.map((img, i) => <div>
                                     <label htmlFor={i}>
                                         <img src={img} alt="" />
                                     </label>
@@ -172,9 +196,14 @@ const EditProduct = () => {
                             }
                         </div>
                         <div className='flex'>
-                            <button className="bg-red-500 hover:shadow-red-500/40 
-                            hover:shadow-md text-white rounded-md px-7 py-2 my-2"
-                            >Save Changes</button>
+                            <button disabled={loader ? true : false} className='bg-red-500 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 hover:shadow-red-300/50 
+                            hover:shadow-lg text-white rounded-md px-7 py-2 mb-3'>
+                                {
+                                    loader 
+                                    ? <PropagateLoader color='white' cssOverride={overrideStyle} /> 
+                                    : 'Save Changes'
+                                }
+                            </button>
                         </div>
                     </form>
                 </div>
