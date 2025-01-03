@@ -35,6 +35,35 @@ export const get_category = createAsyncThunk(
 )
 // End method
 
+export const updateCategory = createAsyncThunk(
+    'category/updateCategory',
+    async({ id, name, image},{rejectWithValue, fulfillWithValue}) => {
+        try {
+            const formData = new FormData()
+            formData.append('name', name)
+            if (image) {
+                formData.append('image', image)
+            }
+            const {data} = await api.put(`/category-update/${id}`, formData, {withCredentials: true})
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+// End method
+export const deleteCategory = createAsyncThunk(
+    'category/deleteCategory',
+    async(id,{rejectWithValue}) => {
+        try {
+            const response = await api.delete(`/category/${id}`)
+            return response.data
+        } catch (error) {
+            return rejectWithValue(error.response.data.message)
+        }
+    }
+)
+
 export const categoryReducer = createSlice({
     name : 'category',
     initialState : { 
@@ -66,6 +95,25 @@ export const categoryReducer = createSlice({
         .addCase(get_category.fulfilled, (state, { payload }) => {
             state.totalCategory = payload.totalCategory;
             state.categorys = payload.categorys;
+        })
+        .addCase(updateCategory.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message
+            const index = state.categorys.findIndex(item => item._id === payload.category._id)
+            if (index !== -1) {
+                state.categorys[index] = payload.category
+            }
+        })
+        .addCase(updateCategory.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload.error
+        })
+        .addCase(deleteCategory.fulfilled, (state, action) => {
+            state.categorys = state.categorys.filter(item => item._id !== action.meta.arg)
+            state.successMessage = action.payload.message
+        })
+        .addCase(deleteCategory.rejected, (state, action) => {
+            state.errorMessage = action.payload
         })
     }
 });
