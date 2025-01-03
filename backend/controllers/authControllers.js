@@ -1,4 +1,6 @@
 const adminModel = require('../models/adminModel')
+const sellerModel = require('../models/sellerModel')
+const sellerCustomerModel = require('../models/chat/sellerCustomerModel')
 const { responseReturn } = require('../utiles/response')
 const bcrpty = require('bcrypt')
 const { createToken } = require('../utiles/tokenCreate')
@@ -18,7 +20,7 @@ class authControllers{
                         role: admin.role
                     })
                     res.cookie('accessToken',token,{
-                        expires: new Date(Date.now() + 7*24*60*1000)
+                        expires: new Date(Date.now() + 7*24*60*60*1000)
                     })
                     responseReturn(res,200,{token,message: "Login Success"})
                 } else {
@@ -32,6 +34,65 @@ class authControllers{
         }
     }
     //End Method
+
+    seller_register = async(req,res) => {
+        const {name,email,password} = req.body
+        try {
+            const getUser = await sellerModel.findOne({email})
+            if (getUser) {
+                responseReturn(res,404,{error: "Email Already Exist"})
+            } else {
+                const seller = await sellerModel.create({
+                    name,
+                    email,
+                    password: await bcrpty.hash(password,10),
+                    method: 'menual',
+                    shopInfo: {}
+                })
+                await sellerCustomerModel.create({
+                    myId: seller.id,
+                })
+
+                const token = await createToken({id: seller.id,role: seller.role})
+                res.cookie('accessToken',token,{
+                    expires: new Date(Date.now() + 7*24*60*60*1000)
+                })
+                responseReturn(res,201,{token,message: "Register Success"})
+            }
+        } catch (error) {
+            responseReturn(res,500,{error: 'Internal Server Error'})
+        }
+    }
+    //End Method
+
+    seller_login = async(req,res) => {
+        const {email,password} = req.body
+        try {
+            const seller = await sellerModel.findOne({email}).select('+password')
+            if (seller) {
+                const match = await bcrpty.compare(password, seller.password)
+                if (match) {
+                    const token = await createToken({
+                        id: seller.id,
+                        role: seller.role
+                    })
+                    res.cookie('accessToken',token,{
+                        expires: new Date(Date.now() + 7*24*60*60*1000)
+                    })
+                    responseReturn(res,200,{token,message: "Login Success"})
+                } else {
+                    responseReturn(res,404,{error: "Password Wrong"})
+                }
+            } else {
+                responseReturn(res,404,{error: "Email not found"})
+            }
+        } catch (error) {
+            responseReturn(res,500,{error: error.message})
+        }
+            
+    }
+    //End Method
+
     getUser = async (req,res) => {
         const {id,role} = req;
 

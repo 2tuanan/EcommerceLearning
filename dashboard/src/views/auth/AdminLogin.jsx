@@ -80,7 +80,7 @@ const AdminLogin = () => {
                             {
                                 loader ? <PropagateLoader color='white' cssOverride={overrideStyle} /> : 'Login'
                             }
-                            </button>
+                        </button>
                     </form>
                 </div>
             </div>
