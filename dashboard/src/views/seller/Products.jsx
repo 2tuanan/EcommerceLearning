@@ -97,7 +97,7 @@ const Products = () => {
                     scope="row"
                     className="py-1 px-4 font-medium whitespace-nowrap"
                   >
-                    100$
+                    $100
                   </td>
                   <td
                     scope="row"
